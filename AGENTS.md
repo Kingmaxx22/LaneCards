@@ -79,6 +79,7 @@ bash run_tests.sh
 | 2 | Costs, monster placement/survival | cost.gd, monster.gd |
 | 3 | Combat, block rules, direct attacks, remove_dead_monsters | engine.gd (updated) |
 | 4 | Lane flipping, collapse, spell/trap triggers, replacement | card.gd, lanes.gd, engine.gd (updated) |
+| 5 | Upkeep: Volcano/Ocean biome effects, start_turn, return_burned_tile | upkeep.gd, player.gd (updated) |
 
 ## Key Design Decisions
 
@@ -87,3 +88,8 @@ bash run_tests.sh
 - **Block rules** — LANE (default): direct attack only on empty lanes. GLOBAL: direct attack only if defender has NO monsters.
 - **Lane collapse** — all 4 tiles BROKEN → monsters removed → SPELL/TRAP effect logged → replacement from deck (FACE_DOWN) or lost_by_deck if empty.
 - **Flip cost** — 1 READY tile burned, unless player has 0 READY tiles (free flip exception).
+- **Volcano upskip** — if player controls a FLIPPED Volcano lane, normal 1-tile return is skipped; instead 1 random READY tile in a FLIPPED lane burns.
+- **Ocean upskip** — if player controls a FLIPPED Ocean lane, normal 1-tile return is skipped; instead 1 BROKEN tile in a FLIPPED lane floods (becomes OCEAN biome, BURNED).
+- **Both biomes** — if player controls both Volcano and Ocean, both effects happen once; normal return skipped once.
+- **return_burned_tile** — card-effect override that always works regardless of Volcano/Ocean.
+- **usable_tiles()** — only tiles in FLIPPED lanes are usable (counting, burning, flooding). FACE_DOWN lanes never count.

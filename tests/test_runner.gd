@@ -11,9 +11,14 @@ func _initialize() -> void:
 	s3.run(checker)
 	var s4 = TestStage4.new()
 	s4.run(checker)
+	var s5 = TestStage5.new()
+	s5.run(checker)
+	var s6 = TestStage6.new()
+	s6.run(checker)
 	print("========================================")
 	print("  TOTAL: %d passed, %d failed" % [checker.passed, checker.failed])
 	print("========================================")
+	print("SUITE_RESULT passed=%d failed=%d" % [checker.passed, checker.failed])
 	if checker.failed == 0:
 		quit(0)
 	else:
